@@ -1,0 +1,40 @@
+{
+  "name": "clockme",
+  "version": "1.0.0",
+  "description": "Paycom Clocking helper",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/nightf0rc3/ClockMe.git"
+  },
+  "bin": {
+    "clockme": "dist/src/clockme.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.release.json",
+    "watch": "tsc -w -p tsconfig.release.json",
+    "lint": "tslint -t stylish --project 'tsconfig.json'",
+    "pretest": "npm run lint"
+  },
+  "author": "Colin Kater <katercolin@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.17.1",
+    "configstore": "^4.0.0",
+    "dotenv": "^6.0.0",
+    "inquirer": "^6.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "@types/configstore": "^2.1.1",
+    "@types/dotenv": "^4.0.3",
+    "@types/inquirer": "0.0.43",
+    "@types/jest": "^23.3.1",
+    "@types/node": "^10.5.8",
+    "@types/selenium-webdriver": "^3.0.10",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "tsutils": "^3.0.0",
+    "typescript": "^3.0.1"
+  }
+}
