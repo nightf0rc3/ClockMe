@@ -7,6 +7,7 @@ import * as inquirer from 'inquirer';
 const config = new Configstore('clockme');
 
 const init = () => {
+  // TODO: improve promptint, fetch security questions only when needed
   inquirer
   .prompt([
     { name: 'username', message: 'Paycom username:' },
@@ -38,7 +39,7 @@ const clock = async (status: ClockStatus) => {
         try {
             const bot: PaycomBot = new PaycomBot({ securityQuestions: config.get('securityQuestions') });
             await bot.login(config.get('credentials'));
-            // await bot.clock(status);
+            await bot.clock(status);
         } catch (err) {
             console.log(`[!] Something went wrong!`);
             console.log(err);
