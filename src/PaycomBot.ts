@@ -18,6 +18,8 @@ export class PaycomBot {
 
     private driver: Driver;
     private securityQuestions: string[];
+    private paycomLoginUrl: string = 'https://www.paycomonline.net/v4/ee/web.php/app/login';
+    private paycomSelfServiceUrl: string = 'https://www.paycomonline.net/v4/ee/web.php/timeclock/WEB07';
 
     constructor(botOptions: { securityQuestions: string[], headless?: boolean }) {
         this.securityQuestions = botOptions.securityQuestions;
@@ -35,7 +37,7 @@ export class PaycomBot {
 
     public async login(credentials: ICredentials) {
         console.log(`[*] Logging in as ${credentials.username}`);
-        await this.driver.get('https://www.paycomonline.net/v4/ee/web.php/app/login');
+        await this.driver.get(this.paycomLoginUrl);
         await this.driver.wait(until.titleIs('Employee Self-Service'), 1000);
         await this.driver.findElement(By.name('username')).sendKeys(credentials.username);
         await this.driver.findElement(By.name('userpass')).sendKeys(credentials.password);
@@ -78,12 +80,12 @@ export class PaycomBot {
     }
 
     public async clock(clockStatus: ClockStatus) {
-        await this.driver.get('https://www.paycomonline.net/v4/ee/web.php/timeclock/WEB07');
+        await this.driver.get(this.paycomSelfServiceUrl);
         await this.driver.wait(until.titleIs('Employee Self Service - Web Time Clock'), 1000);
-        console.log(`[*] Tryimg to punch ${clockStatus}`);
-        await this.driver.get(`https://www.paycomonline.net/v4/ee/web.php/timeclock/WEB07/punch/${clockStatus}`);
+        console.log(`[*] Trying to punch ${clockStatus}`);
+        await this.driver.get(`${this.paycomSelfServiceUrl}/punch/${clockStatus}`);
         console.log(`[+] Punched ${clockStatus}`);
-        await this.driver.get('https://www.paycomonline.net/v4/ee/web.php/timeclock/WEB07');
+        await this.driver.get(this.paycomSelfServiceUrl);
     }
 
     // TODO: getTimeInClockStatus
